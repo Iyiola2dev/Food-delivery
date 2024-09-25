@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import { assets } from "../../assets/Foods/assets";
-import { FaHamburger } from "react-icons/fa";
+import { FaHamburger, FaSearch } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { FaBasketShopping } from "react-icons/fa6";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   const [handleShow, setHandleShow] = useState(false);
@@ -37,58 +39,80 @@ const Navbar = () => {
       </div>
 
       {/* mobile screen */}
-      <div className="flex md:hidden items-center py-5 justify-between">
+      <div className="flex md:hidden items-center py-5 justify-between px-4">
         <img className="logo h-[32px]" src={assets.logo} alt="" />
-        <div>
-          <div className="navbar-right flex gap-2 items-center justify-center">
-            <img className="h-3" src={assets.search_icon} alt="" />
+        <div className="flex justify-center items-center gap-3">
+          <div className="navbar-right flex gap-2 items-center justify-center text-red-500">
+            {/* search */}
+            <FaSearch className="h-3" />
             <div className="navbar-search-icon">
-              <img className="h-3" src={assets.basket_icon} alt="" />
+              {/* basket */}
+              <FaBasketShopping className="h-3" />
+
               <div className="dot"></div>
             </div>
-            <button>sign in</button>
           </div>
+
+          <button>
+            <a
+              href="#_"
+              className="px-3 py-1 relative rounded group overflow-hidden font-medium bg-purple-50 text-red-500 inline-block"
+            >
+              <span className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-red-500 group-hover:h-full opacity-90"></span>
+              <span className="relative group-hover:text-white">sign in</span>
+            </a>
+          </button>
+      
         </div>
         <div>
           <span
-            className="z-30 md:hidden text-red-300 text-2xl"
+            className="z-30 md:hidden text-red-500 text-2xl"
             onClick={() => setHandleShow((prev) => !prev)} // Toggle the handleShow state
           >
-            {!handleShow && <FaHamburger className="text-xl cursor-pointer" />}
+            {!handleShow && (
+              <RxHamburgerMenu className="text-xl cursor-pointer" />
+            )}
           </span>
 
           <div
-            className={`absolute xl:hidden top-0 w-[70%] py-[10rem] right-0 flex flex-col justify-center items-center bg-gray-500/20 shadow-lg backdrop-blur-lg text-white gap-2 font-semibold text-lg transform transition-transform ${
+            className={`absolute xl:hidden top-0 w-full py-[10rem] right-0 flex flex-col justify-center items-center bg-gray-500/20 shadow-lg backdrop-blur-lg text-red-500 gap-2 font-semibold text-lg transform transition-transform ${
               handleShow ? "flex" : "hidden" // Toggle the visibility based on handleShow state
             }`}
             style={{ transition: "transform 0.3s ease, opacity 0.3s ease" }}
           >
             {/* Home Link */}
-            <div
-              className="flex justify-start items-start absolute top-5 right-[20%]"
-              onClick={() => {
-                setHandleShow(false);
-              }}
-            >
-              hi
+            <div className="flex justify-start items-start absolute top-5 right-[20%]">
+              <IoClose onClick={handleClickClose} />
             </div>
             <div
-              onClick={() => {
-                setHandleShow(false);
-              }}
-              className="w-full text-left p-4 hover:bg-gray-400 hover:text-white transition-all cursor-pointer"
+              onClick={handleClickClose}
+              className="w-full text-center px-4 hover:bg-gray-400 hover:text-white transition-all cursor-pointer"
             >
               <Link to="/">Home</Link>
             </div>
 
-            {/* About Link */}
+            {/* menu */}
             <div
-              onClick={() => {
-                setHandleShow(false);
-              }}
-              className="w-full text-left p-4 hover:bg-gray-400 hover:text-white transition-all cursor-pointer"
+              onClick={{ handleClickClose }}
+              className="w-full text-center px-4 hover:bg-gray-400 hover:text-white transition-all cursor-pointer"
             >
-              <Link to="/about">About</Link>
+              <Link to="/about">Menu</Link>
+            </div>
+
+            {/* // Mobile App Link */}
+            <div
+              onClick={{ handleClickClose }}
+              className="w-full text-center px-4 hover:bg-gray-400 hover:text-white transition-all cursor-pointer"
+            >
+              <Link to="/about">Mobile-app</Link>
+            </div>
+
+            {/* // Contact Us Link */}
+            <div
+              onClick={{ handleClickClose }}
+              className="w-full text-center px-4 hover:bg-gray-400 hover:text-white transition-all cursor-pointer"
+            >
+              <Link to="/about">Contact us</Link>
             </div>
           </div>
         </div>
